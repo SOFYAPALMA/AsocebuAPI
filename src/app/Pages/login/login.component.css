@@ -1,0 +1,21 @@
+  
+  .example-full-width {
+    width: 80%;
+  }
+
+  .red-text {
+    color: rgb(10, 10, 10) !important; /* Cambia el color del texto */
+  }
+  
+  mat-card {
+    max-width: 500px;
+    margin: 4em auto;
+    text-align: center;
+    background-color: rgb(241, 247, 248);  /* Cambié el fondo a blanco */
+  }
+
+  .mat-flat-button {
+    background-color: rgb(241, 247, 248);
+  }
+
+  
