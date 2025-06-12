@@ -9,6 +9,9 @@ import { Tareas } from '../Models/Tareas';
   providedIn: 'root'
 })
 export class TareasService {
+  actualizar(tareaActualizada: { estado: boolean; fechaCierre: string | null; idTarea: number; actividad: string; fechaApertura: Date; }) {
+    throw new Error('Method not implemented.');
+  }
   private http = inject(HttpClient);
   private apiUrl: string = appsettings.apiUrl + 'Tareas/';
 
@@ -58,7 +61,7 @@ export class TareasService {
   
     //metodo para la eliminar por id de tarea
     eliminar(id: string): Observable<RespuestaAPI> {
-      return this.http.delete<RespuestaAPI>(`${this.apiUrl}EliminarTarea?id=${id}`).pipe(
+      return this.http.delete<RespuestaAPI>(`${this.apiUrl}EliminarTareaId?id=${id}`).pipe(
         catchError(error => {
           console.error('Error al eliminar Tarea:', error);
           return throwError(() => error);

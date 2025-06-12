@@ -6,6 +6,7 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -17,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
-
+import { CommonModule } from '@angular/common';
 import { RespuestaAPI } from '../../Models/RespuestaAPI';
 import { query } from '@angular/animations';
 import { TareasService } from '../../Services/tareas.service';
@@ -28,6 +29,7 @@ import { Tareas } from '../../Models/Tareas';
   standalone: true,
   imports: [
     MatCardModule,
+    CommonModule,
     MatPaginatorModule,
     MatTableModule,
     MatButtonModule,
@@ -56,7 +58,7 @@ public displayedColumns: string[] = [
   @ViewChild(MatSort) sort: MatSort | undefined;
   tarea: any;
 
-    constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(private router: Router, private dialog: MatDialog, snackBar: MatSnackBar) {}
 
  ngAfterViewInit() {
     if (this.paginator) {
@@ -90,15 +92,39 @@ public displayedColumns: string[] = [
     this.router.navigate(['editar-tarea'], { queryParams: { id: name } });
   }
 
+  confirmarTerminar(tarea: Tareas) {
+  if (confirm('¿Confirmas que esta tarea ha sido terminada?')) {
+    const tareaActualizada: Tareas = {
+      ...tarea,
+      estado: true,
+      fechaCierre: new Date(), // establece la fecha de cierre actual
+    };
+
+    this.tareasServicio.editarProducto(tareaActualizada).subscribe({
+      next: (respuesta) => {
+        if (respuesta.success) {
+          this.obtenerTareas();
+        } else {
+          alert(respuesta.message || 'No se pudo actualizar la tarea');
+        }
+      },
+      error: (err) => {
+        console.error('Error al actualizar la tarea:', err);
+        alert('Error en la solicitud: ' + (err.error?.message || err.message));
+      },
+    });
+  }
+}
+
   nuevaTarea() {
     this.router.navigate(['crear-tarea']);
 }
 
-  eliminar(id: string) {
+  eliminar(idTarea: string) {
     console.log('id');
     console.log('LLAMAREDITAR');
     if (confirm(`¿Desea eliminar la tarea?`)) {
-      this.tareasServicio.eliminar(id).subscribe({
+      this.tareasServicio.eliminar(idTarea).subscribe({
         next: (respuesta: RespuestaAPI) => {
           console.log(respuesta);
           if (respuesta.success) {
@@ -117,5 +143,9 @@ public displayedColumns: string[] = [
     }
   }
 
-
+  salir() {
+  if (confirm('¿Estás seguro de que deseas salir?')) {
+    this.router.navigate(['login']); 
+  }
+}
 }
