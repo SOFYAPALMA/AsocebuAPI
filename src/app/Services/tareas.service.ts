@@ -33,8 +33,8 @@ export class TareasService {
   }
 
   //metodo tipo post para crear Tarea
-    nuevoEstudiante(value: Tareas): Observable<RespuestaAPI> {
-    console.log('nuevo Estudiante', value);
+    nuevaTarea(value: Tareas): Observable<RespuestaAPI> {
+    console.log('nuevo tarea', value);
 
     const httpOptions = {
       headers: new HttpHeaders({

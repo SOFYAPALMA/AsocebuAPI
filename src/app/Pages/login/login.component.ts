@@ -16,6 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../Services/login.service';
 import { RespuestaAPI } from '../../Models/RespuestaAPI';
+import { Usuario } from '../../Models/Usuario';
 
 
 @Component({
@@ -36,7 +37,7 @@ import { RespuestaAPI } from '../../Models/RespuestaAPI';
 export class LoginComponent implements OnInit {
   subscription: Subscription = new Subscription();
   authForm!: UntypedFormGroup;
- 
+  usuario!: Usuario;
 
   submitted = false;
   loading = false;
@@ -73,7 +74,10 @@ export class LoginComponent implements OnInit {
       this.authService.iniciarSesion(this.authForm.value).subscribe({
         next: (response: RespuestaAPI) => {
           if (response.success) {
-            console.log('Login exitoso', response.data);
+            //console.log('Login exitoso', response.data);
+            this.usuario = JSON.parse(JSON.stringify(response.data));
+            //console.log('Login exitoso 2', this.usuario.correo);
+            localStorage.setItem('user', this.usuario.correo);
             this.router.navigate(['/tareas']);
           } else {
             this.error = 'Estudiante y/o contraseña incorrectos';
@@ -90,11 +94,11 @@ export class LoginComponent implements OnInit {
 
   Ir() {
     console.log('Ir');
-    this.router.navigate(['/estudiantes']);
+    this.router.navigate(['/tareas']);
   }
 
-  estudiante(id: number) {
-    this.router.navigate(['nuevoestudiante'], { queryParams: { id: id ?? '0' } });
+  Usuario(id: number) {
+    this.router.navigate(['crear-usuario'], { queryParams: { id: id ?? '0' } });
   }
 
 }

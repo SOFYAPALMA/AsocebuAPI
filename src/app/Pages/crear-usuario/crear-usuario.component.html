@@ -1,1 +1,107 @@
-<p>crear-usuario works!</p>
+<div class="auth-container">
+  <div
+    class="row auth-main justify-content-center align-items-center"
+    style="min-height: 100vh"
+  >
+    <div class="col-sm-6 col-md-4">
+      <mat-card class="auth-card">       
+        <div class="auth-wrapper">
+          <h2 class="welcome-msg text-center">Bienvenido a Asocebu</h2>
+          <h4 class="login-title text-center">Digite la informacion del nuevo Usuario</h4>
+
+          <form
+            class="validate-form"
+            [formGroup]="authForm"
+            (ngSubmit)="onSubmit()"
+          >
+          <div class="row">
+            <div class="col-12 mb-2">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="Nombre" />
+                <mat-icon class="material-icons-outlined p-3" matSuffix
+                  >face</mat-icon
+                >
+                <mat-error *ngIf="f['Nombre']?.hasError('required')"
+                  >El nombre es requerido</mat-error
+                >
+                <mat-error *ngIf="f['Nombre']?.hasError('Nombre')"
+                  >Nombre no válido</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 mb-2">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Correo</mat-label>
+                <input
+                  matInput
+                  [type]="hide ? 'Correo' : 'text'"
+                  formControlName="Correo"
+                />
+                <mat-icon
+                  class="material-icons-outlined-toggle p-3"
+                  matSuffix
+                  >box</mat-icon
+                >               
+                <mat-error *ngIf="f['Correo']?.hasError('required')"
+                  >El Correo es requerido</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 mb-2">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Contraseña</mat-label>
+                <input
+                  matInput
+                  [type]="hide ? 'Clave' : 'text'"
+                  formControlName="Clave"
+                />
+                <mat-icon
+                  class="material-icons-outlined pwd-toggle p-3"
+                  matSuffix
+                  (click)="hide = !hide"
+                >
+                  {{ hide ? "visibility_off" : "visibility" }}
+                </mat-icon>
+                <mat-error *ngIf="f['Clave']?.hasError('required')"
+                  >Contraseña requerida</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- Mostrar mensaje de error -->
+          <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
+            {{ error }}
+          </div>
+
+          <div *ngIf="successMessage" class="alert alert-success mt-3 mb-0">
+            {{ successMessage }}
+          </div>
+
+          <br />
+          <div class="container-auth-form-btn">
+            <div style="text-align: center">
+              <button
+                mat-raised-button
+                color="primary"
+                [class.auth-spinner]="loading"
+                [disabled]="loading"
+                class="auth-form-btn"
+                type="submit"
+              >
+                Crear
+              </button>
+            </div>
+          </div>
+        </form>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

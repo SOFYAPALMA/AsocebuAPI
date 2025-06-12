@@ -16,10 +16,10 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';  
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core'; 
-import { UsuarioService } from '../../Services/usuario.service';
+import { TareasService } from '../../Services/tareas.service';
 
 @Component({
-  selector: 'app-crear-usuario',
+  selector: 'app-crear-tarea',
   standalone: true,
   imports: [
     MatButtonModule,
@@ -35,10 +35,10 @@ import { UsuarioService } from '../../Services/usuario.service';
     MatNativeDateModule,
     MatSelectModule,
   ],
-  templateUrl: './crear-usuario.component.html',
-  styleUrl: './crear-usuario.component.css'
+  templateUrl: './crear-tarea.component.html',
+  styleUrl: './crear-tarea.component.css'
 })
-export class CrearUsuarioComponent implements OnInit{
+export class CrearTareaComponent implements OnInit{
   subscription: Subscription = new Subscription();
 
   submitted = false;
@@ -51,14 +51,14 @@ export class CrearUsuarioComponent implements OnInit{
   constructor(
     private router: Router,
     private formBuilder: UntypedFormBuilder,
-    private usuarioService: UsuarioService,   
+    private tareasService: TareasService,   
     ){}
 
     ngOnInit(): void { 
     this.authForm = this.formBuilder.group({
-      Nombre: ['', Validators.required],
-      Correo: ['', Validators.required],
-      Clave: ['', Validators.required],      
+      actividad: ['', Validators.required],
+      fechaCierre: ['',],
+        
     });  
   }
 
@@ -72,18 +72,18 @@ export class CrearUsuarioComponent implements OnInit{
 
    
     if (this.authForm.invalid) {
-      this.error = 'Error en la creacion de nuevo Usuario';
+      this.error = 'Error en la creacion de nueva tarea';
       this.loading = false;
-      this.successMessage = 'Usuario creado con éxito';
+      this.successMessage = 'Tarea creada con éxito';
       return;
     } else {  
-      this.usuarioService.nuevoUsuario(this.authForm.value).subscribe({
+      this.tareasService.nuevaTarea(this.authForm.value).subscribe({
         next: (response: any) => {
        
-          this.router.navigate(['login']);
+          this.router.navigate(['tareas']);
         },
         error: () => {
-          this.error = 'Error al crear nuevo Usuario';
+          this.error = 'Error al crear nueva tarea';
           this.loading = false;
         }
       });   

@@ -5,12 +5,13 @@ import { RespuestaAPI } from '../Models/RespuestaAPI';
 import { Login } from '../Models/Login';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { appsettings } from '../Settings/appsettings';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'https://localhost:7234/api/Usuario/ValidarLogin';
+  private readonly API_URL = `${appsettings.apiUrl}Usuario/ValidarLogin`;
   private currentUser: any = null;
 
   constructor(
@@ -40,11 +41,7 @@ export class AuthService {
     return new Observable((subscriber) => {
       this.httpClient
         .post<RespuestaAPI>(
-          this.API_URL +
-            '/Validate?correo=' +
-            usuario.Correo +
-            '&password=' +
-            usuario.Clave,
+          this.API_URL, usuario,
           {}
         )
         .subscribe((data) => {

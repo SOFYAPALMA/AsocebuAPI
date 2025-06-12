@@ -25,7 +25,7 @@ export class UsuarioService {
     return new Observable((subscriber) => {
       this.httpClient
         .post<RespuestaAPI>(
-          this.apiUrl + '/CrearUsuario',
+          this.apiUrl + 'CrearUsuario',
            value 
         )
         .subscribe((data: RespuestaAPI) => {

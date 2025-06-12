@@ -1,7 +1,7 @@
 
 export interface Usuario{   
-    Id : number;
-    Nombre :  string;
-    Correo : string;
-    Clave :  string;
+    id : number;
+    nombre :  string;
+    correo : string;
+    clave :  string;
 }

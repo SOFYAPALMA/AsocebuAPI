@@ -4,13 +4,13 @@
     style="min-height: 100vh"
   >
     <div class="col-sm-6 col-md-4">
-      <!-- Card Container -->
       <mat-card class="auth-card">
         <div class="auth-wrapper">
           <h2 class="welcome-msg text-center">Bienvenido a Asocebu</h2>
-          <h4 class="login-title text-center">Inicie sesión aqui</h4>
+          <h4 class="login-title text-center">
+            Digite la informacion de nueva tarea
+          </h4>
 
-          <!-- Formulario de login -->
           <form
             class="validate-form"
             [formGroup]="authForm"
@@ -19,40 +19,37 @@
             <div class="row">
               <div class="col-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Email Usuario</mat-label>
-                  <input matInput formControlName="Correo" />
+                  <mat-label>Nombre actividad</mat-label>
+                  <input matInput formControlName="actividad" />
                   <mat-icon class="material-icons-outlined p-3" matSuffix
-                    >face</mat-icon
+                    >add</mat-icon
                   >
-                  <mat-error *ngIf="f['Correo']?.hasError('required')"
-                    >Email requerido</mat-error
+                  <mat-error *ngIf="f['actividad']?.hasError('required')"
+                    >El nombre es requerido</mat-error
                   >
-                  <mat-error *ngIf="f['Correo']?.hasError('Email')"
-                    >Email no válido</mat-error
+                  <mat-error *ngIf="f['actividad']?.hasError('actividad')"
+                    >Nombre no válido</mat-error
                   >
                 </mat-form-field>
               </div>
             </div>
-
             <div class="row">
               <div class="col-12 mb-2">
                 <mat-form-field class="example-full-width" appearance="outline">
-                  <mat-label>Contraseña</mat-label>
+                  <mat-label>Fecha de cierre</mat-label>
                   <input
                     matInput
-                    [type]="hide ? 'Clave' : 'text'"
-                    formControlName="Clave"
+                    [matDatepicker]="fechaCierrePicker"
+                    formControlName="fechaCierre"
                   />
-                  <mat-icon
-                    class="material-icons-outlined pwd-toggle p-3"
+                  <mat-datepicker-toggle
                     matSuffix
-                    (click)="hide = !hide"
-                  >
-                    {{ hide ? "visibility_off" : "visibility" }}
-                  </mat-icon>
-                  <mat-error *ngIf="f['Clave']?.hasError('required')"
-                    >Contraseña requerida</mat-error
-                  >
+                    [for]="fechaCierrePicker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #fechaCierrePicker></mat-datepicker>
+                  <mat-error *ngIf="f['fechaCierre']?.hasError('required')">
+                    La fecha es requerida
+                  </mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -62,6 +59,11 @@
               {{ error }}
             </div>
 
+            <div *ngIf="successMessage" class="alert alert-success mt-3 mb-0">
+              {{ successMessage }}
+            </div>
+
+            <br />
             <div class="container-auth-form-btn">
               <div style="text-align: center">
                 <button
@@ -72,23 +74,13 @@
                   class="auth-form-btn"
                   type="submit"
                 >
-                  Iniciar Sesión
+                  Crear
                 </button>
               </div>
             </div>
-            <div class="mt-3" style="display: flex; justify-content: space-between">
-              <!-- <button mat-button color="primary" (click)="contrasena(0)">
-                Olvidó su contraseña
-              </button> -->
-              <button mat-button color="primary" (click)="Usuario(0)">
-                Crear Usuario
-              </button>
-            </div>
-            <br>
           </form>
         </div>
       </mat-card>
     </div>
   </div>
 </div>
-

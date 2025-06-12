@@ -1,8 +1,8 @@
 
 export interface Tareas{   
-    IdTarea : number;
-    Actividad :  string;
-    Estado : boolean;
-    FechaApertura :  Date;
-    FechaCierre :  Date;
+    idTarea : number;
+    actividad :  string;
+    estado : boolean;
+    fechaApertura :  Date;
+    fechaCierre :  Date;
 }
